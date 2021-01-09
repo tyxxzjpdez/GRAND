@@ -57,6 +57,8 @@ if args.cuda:
 A, features, labels, idx_train, idx_val, idx_test, adj_mask = load_data(dataset)
 idx_unlabel = torch.range(idx_train.shape[0], labels.shape[0]-1, dtype=int)
 
+features = features.cuda()
+adj_mask = adj_mask.cuda()
 print(features[adj_mask[0]].shape)
 assert False
 
