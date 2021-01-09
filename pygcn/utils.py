@@ -45,6 +45,7 @@ def load_data(dataset_str = 'cora'):
 
     adj = nx.adjacency_matrix(nx.from_dict_of_lists(graph))
     adj = adj + adj.T.multiply(adj.T > adj) - adj.multiply(adj.T > adj)
+    adj_mask = adj
 
     
     adj = adj + sp.eye(adj.shape[0])
@@ -79,7 +80,7 @@ def load_data(dataset_str = 'cora'):
     idx_val = torch.LongTensor(idx_val)
     idx_test = torch.LongTensor(idx_test)
 
-    return A, features, labels, idx_train, idx_val, idx_test
+    return A, features, labels, idx_train, idx_val, idx_test, sparse_mx_to_torch_sparse_tensor(adj_mask).bool()
 
 def parse_index_file(filename):
     index = []
